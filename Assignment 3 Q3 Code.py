@@ -1,11 +1,28 @@
+'''
+Implemented code to solve the hidden surface removal 
+problem (classic computer graphics problem). This code
+utilises divide and conquer technique and has O(n log n)
+running time. 
+
+'''
+
+# helper function for merge sort 
 def merge(arr1, arr2):
+    
     results = []
     i, j = 0, 0
     while i < len(arr1) and j < len(arr2):
+        
+        
         if arr1[i][0] < arr2[j][0]:
             results.append(arr1[i])
             i += 1
-        elif arr1[i][0] == arr2[j][0]:  # if tiebreak, we pick the line with highest y_intercepts sorted
+            
+        # if tiebreak, we pick the line with highest y_intercepts sorted
+        # this way we resolve the issue with parallel lines, where we know
+        # only the one with highest y_intercept have the chance to be on
+        # the surface
+        elif arr1[i][0] == arr2[j][0]:  
             if arr1[i][1] < arr2[j][1]:
                 results.append(arr2[j])
                 i += 1
@@ -32,7 +49,7 @@ def merge_sort(arr):
     right = merge_sort(arr[middle:])
     return merge(left, right)
 
-
+# main function for solving the hidden surface removal problem
 def fish_bowl(arr, x_range):
     arr = merge_sort(arr)
     int_pts = []
